@@ -4,7 +4,7 @@ import type { Blueprint, BlueprintField, FieldType } from '../models/Blueprint';
 import './BlueprintBuilder.css';
 
 export default function BlueprintBuilder() {
-  const { dispatch } = useContext(AppContext);
+  const { state, dispatch } = useContext(AppContext);
 
   const [name, setName] = useState('');
   const [fields, setFields] = useState<BlueprintField[]>([]);
@@ -37,6 +37,11 @@ export default function BlueprintBuilder() {
 
     if (fields.length === 0) {
       alert('Please add at least one field');
+      return;
+    }
+
+    if (state.blueprints.some(bp => bp.name === name)) {
+      alert('A blueprint with this name already exists');
       return;
     }
 
@@ -102,6 +107,7 @@ export default function BlueprintBuilder() {
           <option value="number">Number</option>
           <option value="date">Date</option>
           <option value="gender">Gender</option>
+          <option value="signature">Signature</option>
         </select>
       </div>
 

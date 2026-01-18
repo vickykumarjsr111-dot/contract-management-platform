@@ -1,31 +1,29 @@
-import React, { createContext, useReducer } from 'react';
-import { appReducer, type AppAction } from './AppReducer';
+import { createContext, useReducer, useEffect } from 'react';
+import type { ReactNode } from 'react';
+import { appReducer } from './AppReducer';
 import type { AppState } from './AppState';
-import { loadState } from './storage';
+import { initialState } from './AppState';
+import { loadState, saveState } from './storage';
 
-interface AppContextValue {
+export const AppContext = createContext<{
   state: AppState;
-  dispatch: React.Dispatch<AppAction>;
-}
-
-// 🔹 Load state from localStorage or fallback
-const initialState: AppState =
-  loadState() ?? {
-    blueprints: [],
-    contracts: [],
-  };
-
-export const AppContext = createContext<AppContextValue>({
+  dispatch: React.Dispatch<any>;
+}>({
   state: initialState,
-  dispatch: () => {},
+  dispatch: () => null,
 });
 
-export function AppContextProvider({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  const [state, dispatch] = useReducer(appReducer, initialState);
+export function AppContextProvider({ children }: { children: ReactNode }) {
+  const persistedState = loadState();
+
+  const [state, dispatch] = useReducer(
+    appReducer,
+    persistedState || initialState
+  );
+
+  useEffect(() => {
+    saveState(state);
+  }, [state]);
 
   return (
     <AppContext.Provider value={{ state, dispatch }}>

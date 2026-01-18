@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { AppContext } from '../state/AppContext';
 import type { Blueprint, BlueprintField } from '../models/Blueprint';
 import './ContractForm.css';
 
@@ -7,9 +8,9 @@ interface Props {
 }
 
 export default function ContractForm({ blueprint }: Props) {
-  const [formData, setFormData] = useState<Record<string, string>>({});
+  const [formData, setFormData] = useState<Record<string, string | File>>({});
 
-  function handleChange(fieldId: string, value: string) {
+  function handleChange(fieldId: string, value: string | File) {
     setFormData((prev) => ({
       ...prev,
       [fieldId]: value,
@@ -36,17 +37,51 @@ export default function ContractForm({ blueprint }: Props) {
 
             {/* GENDER FIELD */}
             {field.type === 'gender' ? (
-              <select
-                aria-label={field.label}
-                value={formData[field.id] || ''}
-                onChange={(e) =>
-                  handleChange(field.id, e.target.value)
-                }
-              >
-                <option value="">Select Gender</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-              </select>
+              <div>
+                <label>
+                  <input
+                    type="radio"
+                    name={field.id}
+                    value="Male"
+                    checked={formData[field.id] === 'Male'}
+                    onChange={(e) =>
+                      handleChange(field.id, e.target.value)
+                    }
+                  />
+                  Male
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    name={field.id}
+                    value="Female"
+                    checked={formData[field.id] === 'Female'}
+                    onChange={(e) =>
+                      handleChange(field.id, e.target.value)
+                    }
+                  />
+                  Female
+                </label>
+              </div>
+            ) : field.type === 'signature' ? (
+              /* SIGNATURE FILE INPUT */
+              <>
+                <input
+                  type="file"
+                  accept="image/*"
+                  aria-label={field.label}
+                  onChange={(e) =>
+                    handleChange(field.id, e.target.files?.[0] || '')
+                  }
+                />
+                {formData[field.id] && formData[field.id] instanceof File && (
+                  <img
+                    src={URL.createObjectURL(formData[field.id] as File)}
+                    alt="Signature Preview"
+                    style={{ maxWidth: '200px', maxHeight: '100px', marginTop: '10px' }}
+                  />
+                )}
+              </>
             ) : (
               /* NORMAL INPUT */
               <input
@@ -60,7 +95,7 @@ export default function ContractForm({ blueprint }: Props) {
                     : 'text'
                 }
                 placeholder={field.label}
-                value={formData[field.id] || ''}
+                value={formData[field.id] as string || ''}
                 onChange={(e) =>
                   handleChange(field.id, e.target.value)
                 }

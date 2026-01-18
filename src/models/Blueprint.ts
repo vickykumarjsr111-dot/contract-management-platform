@@ -1,5 +1,4 @@
-// models/Blueprint.ts
-export type FieldType = 'Name' | 'date' | 'email' | 'number' | 'gender';
+export type FieldType = 'Name' | 'email' | 'number' | 'date' | 'gender' | 'signature';
 
 export interface BlueprintField {
   id: string;
@@ -16,4 +15,5 @@ export interface Blueprint {
   name: string;
   fields: BlueprintField[];
   createdAt: string;
+  locked?: boolean; // 👈 NEW
 }
