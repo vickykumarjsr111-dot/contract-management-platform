@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { AppContext } from '../state/AppContext';
 import type { Blueprint, BlueprintField } from '../models/Blueprint';
 import './ContractForm.css';
 
@@ -46,23 +45,14 @@ export default function ContractForm({ blueprint }: Props) {
               />
             ) : field.type === 'Signature' ? (
               /* SIGNATURE FILE INPUT */
-              <>
-                <input
-                  type="file"
-                  accept="image/*"
-                  aria-label={field.label}
-                  onChange={(e) =>
-                    handleChange(field.id, e.target.files?.[0] || '')
-                  }
-                />
-                {formData[field.id] && formData[field.id] instanceof File && (
-                  <img
-                    src={URL.createObjectURL(formData[field.id] as File)}
-                    alt="Signature Preview"
-                    style={{ maxWidth: '200px', maxHeight: '100px', marginTop: '10px' }}
-                  />
-                )}
-              </>
+              <input
+                type="file"
+                accept="image/*"
+                aria-label={field.label}
+                onChange={(e) =>
+                  handleChange(field.id, e.target.files?.[0] || '')
+                }
+              />
             ) : (
               /* NORMAL INPUT */
               <input
