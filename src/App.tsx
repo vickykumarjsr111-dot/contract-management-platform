@@ -1,9 +1,17 @@
-function App() {
+import { Routes, Route } from 'react-router-dom';
+import BlueprintBuilder from './pages/BlueprintBuilder';
+import Dashboard from './pages/Dashboard';
+import Navbar from './components/Navbar';
+
+export default function App() {
   return (
-    <div>
-      <h1>Contract Management Platform</h1>
-    </div>
+    <>
+      <Navbar />
+
+      <Routes>
+        <Route path="/" element={<BlueprintBuilder />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+      </Routes>
+    </>
   );
 }
-
-export default App;

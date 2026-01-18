@@ -1,4 +1,5 @@
-export type FieldType = 'text' | 'date' | 'signature' | 'checkbox';
+// models/Blueprint.ts
+export type FieldType = 'Name' | 'date' | 'email' | 'number' | 'gender';
 
 export interface BlueprintField {
   id: string;

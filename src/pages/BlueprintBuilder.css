@@ -1,0 +1,65 @@
+/* =========================
+   CREATE BLUEPRINT CARD
+========================= */
+.form-card {
+  max-width: 720px;
+  margin: 40px auto;
+  background-color: var(--bg-card);
+  padding: 32px;
+  border-radius: 16px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.08);
+}
+
+/* =========================
+   FORM GROUP
+========================= */
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+/* =========================
+   BUTTON ROW
+========================= */
+.button-row {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+/* =========================
+   PREVIEW LIST
+========================= */
+ul {
+  margin-top: 12px;
+  padding-left: 18px;
+}
+
+li {
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+/* =========================
+   MOBILE
+========================= */
+@media (max-width: 600px) {
+  .form-card {
+    margin: 20px 12px;
+    padding: 20px;
+  }
+
+  .button-row {
+    flex-direction: column;
+  }
+}
+.form-card h2{
+  font-family: Arial, Helvetica, sans-serif;
+  color: black;
+}

@@ -1,4 +1,4 @@
-import { ContractStatus } from './ContactStatus';
+import { ContractStatus } from './ContractStatus';
 
 export interface Contract {
   id: string;

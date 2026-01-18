@@ -1,0 +1,48 @@
+/* =========================
+   CONTRACTS SECTION
+========================= */
+.contracts {
+  max-width: 720px;
+  margin: 40px auto 80px;
+}
+
+/* =========================
+   CONTRACT CARD
+========================= */
+.contract-card {
+  background-color: var(--bg-card);
+  border-radius: 12px;
+  padding: 16px 20px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
+  margin-bottom: 14px;
+}
+
+.contract-title {
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.contract-status {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-left: 6px;
+}
+
+/* =========================
+   ACTION BUTTONS
+========================= */
+.contract-actions {
+  margin-top: 14px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* =========================
+   MOBILE
+========================= */
+@media (max-width: 600px) {
+  .contract-actions {
+    flex-direction: column;
+  }
+}
