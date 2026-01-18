@@ -3,6 +3,11 @@ Contract Management Platform (Frontend Only) Data will be Stored in localstorage
 A frontend-only Contract Management Platform built with React + Vite + TypeScript.
 The application allows users to create contract blueprints, generate contracts from those blueprints, and manage contract lifecycle states through a dashboard.
 
+Live Demo
+The application is deployed and accessible online.
+
+Live URL: https://contract-management-platform-xi.vercel.app/
+
 Features
 1. Blueprint Builder
 
