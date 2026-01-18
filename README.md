@@ -1,73 +1,159 @@
-# React + TypeScript + Vite
+Contract Management Platform (Frontend Only) Data will be Stored in localstorage
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A frontend-only Contract Management Platform built with React + TypeScript + Vite, using Context API + Reducer for state management and LocalStorage for persistence.
 
-Currently, two official plugins are available:
+This project allows users to:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Create reusable Blueprints (contract templates)
 
-## React Compiler
+View all saved blueprints on a Dashboard
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Create Contracts from a blueprint
 
-## Expanding the ESLint configuration
+Manage contract lifecycle states:
+Created → Approved → Sent → Signed → Locked
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Persist data across page refreshes (LocalStorage)
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+Tech Stack
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+React 18
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+TypeScript
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Vite
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+React Router DOM
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Context API + useReducer
+
+LocalStorage (no backend)
+
+Folder Structure
+src/
+│
+├── components/
+│   ├── Navbar.tsx
+│   ├── Navbar.css
+|   ├── Header.tsx
+|   ├── Header.css
+│
+├── models/
+│   ├── Blueprint.ts
+│   ├── Contract.ts
+│   ├── ContractStatus.ts
+│
+├── pages/
+│   ├── BlueprintBuilder.tsx
+│   ├── BlueprintBuilder.css
+│   ├── BlueprintList.tsx
+│   ├── BlueprintList.css
+│   ├── ContractForm.tsx
+│   ├── ContractForm.css
+│   ├── ContractList.tsx
+│   ├── ContractList.css
+│   ├── ContractPage.tsx
+│   ├── Dashboard.tsx
+│   ├── Dashboard.css
+│
+├── state/
+│   ├── AppContext.tsx
+│   ├── AppReducer.ts
+│   ├── AppState.ts
+│   ├── lifecycle.ts
+│   ├── storage.ts
+│
+├── App.tsx
+├── App.css
+├── index.css
+├── main.tsx
+
+Core Features
+1. Blueprint Builder
+
+Create a blueprint (template)
+
+Add multiple fields (Name, Email, Number, Date, etc.)
+
+Save blueprint to global state + LocalStorage
+
+2. Dashboard
+
+View all saved blueprints
+
+Create contracts from any blueprint
+
+Navigation via top Navbar
+
+3. Contract Creation
+
+Generates a contract from a blueprint
+
+Automatically starts with status CREATED
+
+Each contract is stored globally
+
+4. Contract Lifecycle
+
+Supported statuses:
+
+CREATED → APPROVED → SENT → SIGNED → LOCKED
+
+
+Status can only move forward
+
+Once LOCKED, contract becomes immutable
+
+5. Persistence
+
+All blueprints and contracts are saved in LocalStorage
+
+Data survives page refresh
+
+Routing
+Route	Description
+/	Blueprint Builder
+/dashboard	Dashboard (Blueprint List)
+/contracts/:id	Contract lifecycle page
+State Management
+
+Centralized state via AppContext
+
+Actions handled in AppReducer
+
+Automatic persistence using:
+
+storage.ts
+
+lifecycle.ts
+
+How LocalStorage Works
+
+State is loaded on app start
+
+Every state update is saved automatically
+
+loadState();
+saveState(state);
+
+
+No backend required.
+
+How to Run Locally
+npm install
+npm run dev
+
+
+Then open:
+
+http://localhost:5173
+
+Important Notes
+
+This is a frontend-only demo
+
+No authentication
+
+No server-side validation
+
+Intended for learning / prototyping
