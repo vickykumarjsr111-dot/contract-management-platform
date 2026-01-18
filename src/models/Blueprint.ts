@@ -1,4 +1,4 @@
-export type FieldType = 'Name' | 'email' | 'number' | 'date' | 'gender' | 'signature';
+export type FieldType = 'Text' | 'Date' | 'Signature' | 'Checkbox';
 
 export interface BlueprintField {
   id: string;

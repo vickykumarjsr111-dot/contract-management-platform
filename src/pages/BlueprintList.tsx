@@ -2,29 +2,29 @@ import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AppContext } from '../state/AppContext';
 import { ContractStatus } from '../models/ContractStatus';
+import type { Blueprint } from '../models/Blueprint';
 import './BlueprintList.css';
 
 export default function BlueprintList() {
   const { state, dispatch } = useContext(AppContext);
   const navigate = useNavigate();
 
-  function createContract(blueprintId: string, name: string) {
+  function createContract(blueprint: Blueprint) {
     const contractId = crypto.randomUUID();
 
     dispatch({
       type: 'ADD_CONTRACT',
       payload: {
         id: contractId,
-        name,
-        blueprintId,
+        name: blueprint.name,
+        blueprintId: blueprint.id,
         status: ContractStatus.CREATED,
         values: {},
         createdAt: new Date().toISOString(),
       },
     });
 
-    // 👇 THIS WAS MISSING OR WRONG BEFORE
-    navigate(`/contracts/${contractId}`);
+    navigate('/dashboard');
   }
 
   if (state.blueprints.length === 0) {
@@ -44,7 +44,7 @@ export default function BlueprintList() {
           ) : (
             <button
               className="primary-btn"
-              onClick={() => createContract(bp.id, bp.name)}
+              onClick={() => createContract(bp)}
             >
               Create Contract
             </button>

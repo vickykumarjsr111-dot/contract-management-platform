@@ -1,15 +1,18 @@
 import { useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { AppContext } from '../state/AppContext';
 import type { Blueprint, BlueprintField, FieldType } from '../models/Blueprint';
+import { ContractStatus } from '../models/ContractStatus';
 import './BlueprintBuilder.css';
 
 export default function BlueprintBuilder() {
   const { state, dispatch } = useContext(AppContext);
+  const navigate = useNavigate();
 
   const [name, setName] = useState('');
   const [fields, setFields] = useState<BlueprintField[]>([]);
   const [fieldLabel, setFieldLabel] = useState('');
-  const [fieldType, setFieldType] = useState<FieldType>('Name');
+  const [fieldType, setFieldType] = useState<FieldType>('Text');
 
   function addField() {
     if (!fieldLabel.trim()) {
@@ -26,7 +29,7 @@ export default function BlueprintBuilder() {
 
     setFields((prev) => [...prev, newField]);
     setFieldLabel('');
-    setFieldType('Name');
+    setFieldType('Text');
   }
 
   function saveBlueprint() {
@@ -57,13 +60,30 @@ export default function BlueprintBuilder() {
       payload: blueprint,
     });
 
+    // Also create a contract from the blueprint
+    const contractId = crypto.randomUUID();
+    dispatch({
+      type: 'ADD_CONTRACT',
+      payload: {
+        id: contractId,
+        name: blueprint.name,
+        blueprintId: blueprint.id,
+        status: ContractStatus.CREATED,
+        values: {},
+        createdAt: new Date().toISOString(),
+      },
+    });
+
     // Reset form
     setName('');
     setFields([]);
     setFieldLabel('');
-    setFieldType('Name');
+    setFieldType('Text');
 
     alert('Blueprint saved successfully');
+
+    // Navigate to dashboard
+    navigate('/dashboard');
   }
 
   return (
@@ -102,12 +122,10 @@ export default function BlueprintBuilder() {
           value={fieldType}
           onChange={(e) => setFieldType(e.target.value as FieldType)}
         >
-          <option value="Name">Name</option>
-          <option value="email">Email</option>
-          <option value="number">Number</option>
-          <option value="date">Date</option>
-          <option value="gender">Gender</option>
-          <option value="signature">Signature</option>
+          <option value="Text">Text</option>
+          <option value="Date">Date</option>
+          <option value="Signature">Signature</option>
+          <option value="Checkbox">Checkbox</option>
         </select>
       </div>
 

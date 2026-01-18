@@ -35,35 +35,16 @@ export default function ContractForm({ blueprint }: Props) {
           <div key={field.id} className="form-group">
             <label>{field.label}</label>
 
-            {/* GENDER FIELD */}
-            {field.type === 'gender' ? (
-              <div>
-                <label>
-                  <input
-                    type="radio"
-                    name={field.id}
-                    value="Male"
-                    checked={formData[field.id] === 'Male'}
-                    onChange={(e) =>
-                      handleChange(field.id, e.target.value)
-                    }
-                  />
-                  Male
-                </label>
-                <label>
-                  <input
-                    type="radio"
-                    name={field.id}
-                    value="Female"
-                    checked={formData[field.id] === 'Female'}
-                    onChange={(e) =>
-                      handleChange(field.id, e.target.value)
-                    }
-                  />
-                  Female
-                </label>
-              </div>
-            ) : field.type === 'signature' ? (
+            {field.type === 'Checkbox' ? (
+              <input
+                type="checkbox"
+                aria-label={field.label}
+                checked={formData[field.id] === 'true'}
+                onChange={(e) =>
+                  handleChange(field.id, e.target.checked ? 'true' : 'false')
+                }
+              />
+            ) : field.type === 'Signature' ? (
               /* SIGNATURE FILE INPUT */
               <>
                 <input
@@ -85,15 +66,7 @@ export default function ContractForm({ blueprint }: Props) {
             ) : (
               /* NORMAL INPUT */
               <input
-                type={
-                  field.type === 'email'
-                    ? 'email'
-                    : field.type === 'number'
-                    ? 'number'
-                    : field.type === 'date'
-                    ? 'date'
-                    : 'text'
-                }
+                type={field.type === 'Date' ? 'date' : 'text'}
                 placeholder={field.label}
                 value={formData[field.id] as string || ''}
                 onChange={(e) =>
