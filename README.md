@@ -1,159 +1,174 @@
 Contract Management Platform (Frontend Only) Data will be Stored in localstorage
 
-A frontend-only Contract Management Platform built with React + TypeScript + Vite, using Context API + Reducer for state management and LocalStorage for persistence.
+A frontend-only Contract Management Platform built with React + Vite + TypeScript.
+The application allows users to create contract blueprints, generate contracts from those blueprints, and manage contract lifecycle states through a dashboard.
 
-This project allows users to:
+Features
+1. Blueprint Builder
 
-Create reusable Blueprints (contract templates)
+Create reusable Blueprints (templates) for contracts.
 
-View all saved blueprints on a Dashboard
+Add dynamic fields such as:
 
-Create Contracts from a blueprint
+Name
 
-Manage contract lifecycle states:
+Email
+
+Number
+
+Date
+
+Preview fields before saving.
+
+Blueprints are persisted using LocalStorage.
+
+2. Dashboard
+
+View all saved blueprints.
+
+Create contracts from any blueprint.
+
+See contract list with:
+
+Contract Name
+
+Blueprint Name
+
+Status
+
+Created Date
+
+Filter contracts by status (All / Pending / Signed).
+
+3. Contract Lifecycle Management
+
+Each contract follows a strict lifecycle:
+
 Created → Approved → Sent → Signed → Locked
 
-Persist data across page refreshes (LocalStorage)
+
+Status updates are controlled and sequential.
+
+Once a contract reaches Locked, it becomes immutable.
+
+Lifecycle state is preserved across page refresh.
+
+4. Contract Form
+
+Dynamically renders fields based on the selected blueprint.
+
+Allows filling employee details.
+
+Submit, approve, or remove contracts.
+
+Fully integrated with lifecycle state machine.
+
+5. Persistent State
+
+All application data is stored in LocalStorage:
+
+Blueprints
+
+Contracts
+
+Status updates
+
+Refreshing the page does not lose data.
 
 Tech Stack
 
-React 18
+React (with Hooks)
 
 TypeScript
 
 Vite
 
-React Router DOM
+React Router
 
 Context API + useReducer
 
-LocalStorage (no backend)
+CSS (no UI library)
 
-Folder Structure
+Project Structure
 src/
-│
 ├── components/
 │   ├── Navbar.tsx
-│   ├── Navbar.css
+│   ├── Header.tsx
 |   ├── Header.tsx
 |   ├── Header.css
+|   ├── ContractTable.tsx
+|   ├── ContractTable.css
 │
 ├── models/
 │   ├── Blueprint.ts
 │   ├── Contract.ts
-│   ├── ContractStatus.ts
+│   └── ContractStatus.ts
 │
 ├── pages/
 │   ├── BlueprintBuilder.tsx
-│   ├── BlueprintBuilder.css
 │   ├── BlueprintList.tsx
-│   ├── BlueprintList.css
 │   ├── ContractForm.tsx
-│   ├── ContractForm.css
 │   ├── ContractList.tsx
-│   ├── ContractList.css
 │   ├── ContractPage.tsx
 │   ├── Dashboard.tsx
 │   ├── Dashboard.css
+│   ├── BlueprintBuilder.css
+│   ├── BlueprintList.css
+│   ├── ContractForm.css
+│   └── ContractList.css
 │
 ├── state/
 │   ├── AppContext.tsx
 │   ├── AppReducer.ts
 │   ├── AppState.ts
 │   ├── lifecycle.ts
-│   ├── storage.ts
+│   └── storage.ts
 │
 ├── App.tsx
-├── App.css
-├── index.css
 ├── main.tsx
-
-Core Features
-1. Blueprint Builder
-
-Create a blueprint (template)
-
-Add multiple fields (Name, Email, Number, Date, etc.)
-
-Save blueprint to global state + LocalStorage
-
-2. Dashboard
-
-View all saved blueprints
-
-Create contracts from any blueprint
-
-Navigation via top Navbar
-
-3. Contract Creation
-
-Generates a contract from a blueprint
-
-Automatically starts with status CREATED
-
-Each contract is stored globally
-
-4. Contract Lifecycle
-
-Supported statuses:
-
-CREATED → APPROVED → SENT → SIGNED → LOCKED
-
-
-Status can only move forward
-
-Once LOCKED, contract becomes immutable
-
-5. Persistence
-
-All blueprints and contracts are saved in LocalStorage
-
-Data survives page refresh
+├── index.css
+├── App.css
 
 Routing
 Route	Description
 /	Blueprint Builder
-/dashboard	Dashboard (Blueprint List)
-/contracts/:id	Contract lifecycle page
+/dashboard	Dashboard (Blueprints & Contracts)
+/contracts/:id	Contract details & lifecycle
 State Management
 
-Centralized state via AppContext
+Global state managed using Context API + useReducer
 
-Actions handled in AppReducer
+Reducer actions include:
 
-Automatic persistence using:
+ADD_BLUEPRINT
+
+ADD_CONTRACT
+
+UPDATE_CONTRACT_STATUS
+
+REMOVE_CONTRACT
+
+Persistence handled in:
 
 storage.ts
 
 lifecycle.ts
-
-How LocalStorage Works
-
-State is loaded on app start
-
-Every state update is saved automatically
-
-loadState();
-saveState(state);
-
-
-No backend required.
 
 How to Run Locally
 npm install
 npm run dev
 
 
-Then open:
+Open in browser:
 
 http://localhost:5173
 
-Important Notes
+Notes & Limitations
 
-This is a frontend-only demo
+This is a frontend-only project (no backend).
 
-No authentication
+Authentication is not implemented.
 
-No server-side validation
+Data is stored locally (LocalStorage).
 
-Intended for learning / prototyping
+Designed for learning, demos, and frontend architecture practice.
